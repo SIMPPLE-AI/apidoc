@@ -1,6 +1,7 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type * as Redocusaurus from 'redocusaurus';
 
 const config: Config = {
   title: 'My Site',
@@ -31,35 +32,33 @@ const config: Config = {
 
   presets: [
     [
-      'classic',
-      {
-        docs: {
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      } satisfies Preset.Options,
-    ],
+      '@docusaurus/preset-classic',
+       {
+         googleAnalytics: {
+           trackingID: 'XXXXXX',
+         },
+       } satisfies Preset.Options,
+     ],
+     // Redocusaurus config
+     [
+       'redocusaurus',
+       {
+         // Plugin Options for loading OpenAPI files
+         specs: [
+           // Pass it a path to a local OpenAPI YAML file
+           // You can also pass it a OpenAPI spec URL
+           {
+             spec: 'https://redocly.github.io/redoc/openapi.yaml',
+             route: '/openapi/',
+           },
+         ],
+         // Theme Options for modifying how redoc renders them
+         theme: {
+           // Change with your site colors
+           primaryColor: '#1890ff',
+         },
+       },
+     ] satisfies Redocusaurus.PresetEntry,
   ],
 
   themeConfig: {
